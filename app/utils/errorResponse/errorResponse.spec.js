@@ -1,4 +1,4 @@
-const errorResponse = require('../errorResponse');
+const errorResponse = require('./errorResponse');
 
 describe('errorResponse should return if the response contains an error', () => {
   test('should return if the response code is 400', () => {

@@ -1,4 +1,4 @@
-const formatCurrency = require('../formatCurrency');
+const formatCurrency = require('./formatCurrency');
 
 describe('formatCurrency should format the value to a currency friendly string', () => {
   test('should format the positive balance to correct amount', () => {

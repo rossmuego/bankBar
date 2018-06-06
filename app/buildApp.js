@@ -1,6 +1,7 @@
 const { Menu, clipboard } = require('electron'); // eslint-disable-line
 const aboutMenu = require('../app/menus/about');
 const contactMenu = require('../app/menus/contact');
+const convertToPositive = require('./utils/convertToPositive/convertToPositive');
 const formatCurrency = require('./utils/formatCurrency/formatCurrency');
 const getBalance = require('./serviceCalls/GET/balance');
 
@@ -12,6 +13,7 @@ const buildApp = async (store, tray) => {
 
   const formattedBalance = formatCurrency(balance, currency);
   const formattedSpend = formatCurrency(spent, currency);
+  const positiveFormattedSpend = convertToPositive(formattedSpend, currency);
 
   const sortCode = store.get('sortCode');
   const accountNo = store.get('accountNo');
@@ -19,7 +21,7 @@ const buildApp = async (store, tray) => {
   tray.setTitle(`£${formattedBalance}`);
 
   const appMenu = Menu.buildFromTemplate([
-    { label: `Spend today:  £${formattedSpend}` },
+    { label: `Spend today:  £${positiveFormattedSpend}` },
     { type: 'separator' },
     {
       label: 'Bank Details',
