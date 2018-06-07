@@ -1,4 +1,7 @@
 # Bankbar: Monzo on your desktop.
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+
+
 A small project using the [Monzo API](https://docs.monzo.com/), mostly to get my around OAuth2.
 
 Light theme:
@@ -63,7 +66,7 @@ At this point you can just run `npm install` and `npm start` to kick off the app
 ## Contributing
 1. Fork it <https://github.com/johneas10/bankbar/fork>
 2. Create your feature branch `git checkout -b feature/more_monzo`
-3. Commit your changes `git commit -am 'Add some monzo'`
+3. Commit your changes with [commitizen](https://www.npmjs.com/package/commitizen) `npm run commit`
 4. Push to the branch `git push origin feature/more_monzo`
 5. Create a new Pull Request against the Master branch.
 
