@@ -4,12 +4,24 @@ const contactMenu = require('../app/menus/contact');
 const convertToPositive = require('./utils/convertToPositive/convertToPositive');
 const formatCurrency = require('./utils/formatCurrency/formatCurrency');
 const getBalance = require('./serviceCalls/GET/balance');
+const getPots = require('./serviceCalls/GET/pots');
 
 const buildApp = async (store, tray) => {
   console.log('in buildApp');
 
   const balancePayload = await getBalance(store);
+  const potsList = await getPots(store);
   const { balance, currency, spend_today: spent } = balancePayload;
+  const { pots } = potsList;
+  const subMenuPots = [];
+
+  for (let i = 0; i < pots.length; i++) { // eslint-disable-line no-plusplus
+    if (!pots[i].deleted) {
+      subMenuPots.push({
+        label: `${pots[i].name} - £${pots[i].balance / 100}`,
+      });
+    }
+  }
 
   const formattedBalance = formatCurrency(balance, currency);
   const formattedSpend = formatCurrency(spent, currency);
@@ -22,6 +34,11 @@ const buildApp = async (store, tray) => {
 
   const appMenu = Menu.buildFromTemplate([
     { label: `Spend today:  £${positiveFormattedSpend}` },
+    { type: 'separator' },
+    {
+      label: 'Pots',
+      submenu: subMenuPots,
+    },
     { type: 'separator' },
     {
       label: 'Bank Details',
