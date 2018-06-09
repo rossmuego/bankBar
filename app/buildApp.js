@@ -13,15 +13,12 @@ const buildApp = async (store, tray) => {
   const potsList = await getPots(store);
   const { balance, currency, spend_today: spent } = balancePayload;
   const { pots } = potsList;
-  const subMenuPots = [];
 
-  for (let i = 0; i < pots.length; i++) { // eslint-disable-line no-plusplus
-    if (!pots[i].deleted) {
-      subMenuPots.push({
-        label: `${pots[i].name} - £${pots[i].balance / 100}`,
-      });
-    }
-  }
+  const subMenuPots = pots
+    .filter(p => !p.deleted)
+    .map(p => ({
+      label: `${p.name} - £${formatCurrency(p.balance, p.currency)}`,
+    }));
 
   const formattedBalance = formatCurrency(balance, currency);
   const formattedSpend = formatCurrency(spent, currency);
