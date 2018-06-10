@@ -1,25 +1,25 @@
 const { Menu } = require('electron'); // eslint-disable-line
 const buildApp = require('../buildApp');
+const config = require('../../config');
 const getAccessToken = require('../serviceCalls/POST/accessToken');
 const getAccount = require('../serviceCalls/GET/accounts');
 const getAuthCode = require('./getAuthCode');
 const server = require('./server');
 
-const continueLogin = async (authorizationCode, store, svr, tray) => {
+const continueLogin = async (store, svr, tray) => {
   console.log('in continueLogin');
 
   try {
     await svr.stop();
-    const accessToken = await getAccessToken(authorizationCode);
-    const accountId = await getAccount(accessToken.access_token);
 
-    // save values for future use
+    const accessToken = await getAccessToken(store);
     store.set('accessToken', accessToken.access_token);
     store.set('refreshToken', accessToken.refresh_token);
+
+    const accountId = await getAccount(store);
     store.set('accountId', accountId.accounts[0].id);
     store.set('sortCode', accountId.accounts[0].sort_code);
     store.set('accountNo', accountId.accounts[0].account_number);
-    store.set('authorizationCode', authorizationCode);
 
     console.log('user setup!');
 
@@ -36,7 +36,7 @@ const startLogin = async (store, tray) => {
   console.log('in startLogin');
 
   try {
-    getAuthCode();
+    getAuthCode(store);
     server(continueLogin, store, tray);
   } catch (err) {
     console.log(`Error in startLogin: ${err}`);
@@ -48,6 +48,16 @@ module.exports = (store, tray) => {
 
   // clear store incase of errors
   store.clear();
+
+  const {
+    CLIENT_ID: clientId,
+    CLIENT_SECRET: clientSecret,
+    REDIRECT_URI: redirectUri,
+  } = config;
+
+  store.set('clientId', clientId);
+  store.set('clientSecret', clientSecret);
+  store.set('redirectUri', redirectUri);
 
   const loginMenu = Menu.buildFromTemplate([
     { label: 'Login', click() { startLogin(store, tray); } },

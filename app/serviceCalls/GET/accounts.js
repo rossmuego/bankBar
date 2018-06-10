@@ -1,10 +1,11 @@
 const fetch = require('node-fetch');
 const errorResponse = require('../../utils/errorResponse/errorResponse');
 
-module.exports = async (accessToken) => {
+module.exports = async (store) => {
   console.log('in GETaccount');
 
   try {
+    const accessToken = store.get('accessToken');
     const options = {
       headers: {
         Authorization: `Bearer ${accessToken}`,

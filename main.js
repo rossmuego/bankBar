@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const { app, Tray } = require('electron'); // eslint-disable-line
 const buildApp = require('./app/buildApp');
 const getWhoAmI = require('./app/serviceCalls/GET/whoAmI');
@@ -17,8 +15,7 @@ if (process.platform === 'darwin') {
 }
 
 app.on('ready', async () => {
-  // uncoment to start from scratch
-  // store.clear();
+  // store.clear(); // uncoment to start from scratch
   console.log('starting...');
 
   try {

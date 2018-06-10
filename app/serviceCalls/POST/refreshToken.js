@@ -9,9 +9,8 @@ module.exports = async (store) => {
     const form = new FormData();
 
     const refreshToken = store.get('refreshToken');
-
-    const clientId = process.env.CLIENT_ID;
-    const clientSecret = process.env.CLIENT_SECRET;
+    const clientId = store.get('clientId');
+    const clientSecret = store.get('clientSecret');
 
     form.append('grant_type', 'refresh_token');
     form.append('client_id', clientId);

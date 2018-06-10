@@ -2,15 +2,16 @@ const fetch = require('node-fetch');
 const FormData = require('form-data');
 const errorResponse = require('../../utils/errorResponse/errorResponse');
 
-module.exports = async (authorizationCode) => {
+module.exports = async (store) => {
   console.log('in POSTaccessToken');
 
   try {
     const form = new FormData();
 
-    const clientId = process.env.CLIENT_ID;
-    const clientSecret = process.env.CLIENT_SECRET;
-    const redirectUri = process.env.REDIRECT_URI;
+    const authorizationCode = store.get('authorizationCode');
+    const clientId = store.get('clientId');
+    const clientSecret = store.get('clientSecret');
+    const redirectUri = store.get('redirectUri');
 
     form.append('grant_type', 'authorization_code');
     form.append('client_id', clientId);
