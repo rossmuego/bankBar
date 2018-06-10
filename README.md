@@ -20,10 +20,10 @@ Dark theme:
 ## Features
 - Shows your balance the menubar.
 - Shows todays spend.
+- Shows pot balances.
 - Quick access to bank info (sort code/account number) with ability to quickly copy details.
 
 A few features I would like to add:
-- Pot Balances.
 - Recent Transactions. This is hard at the moment as the API doesn't let me download recent transactions without downloading ALL of them. This is very slow. I may just implement todays transactions, rather than the last 5 or 10. Not very usefull immediately after midnight..
 - Notifications. Currently not possible as the API doesn't support WebSockets.
 - Make the application more non-dev user friendly.
@@ -48,14 +48,14 @@ Unfortunately Monzo won't be lifting the limit anytime soon due to apps potentia
 
 ###### Add credentials to the application:
 - Open up your terminal app and clone the repository: `git clone git@github.com:johneas10/bankbar`
-- Copy _.env.example_ as _.env_:  `cp .env.example .env`
-- Add your credentials to _.env_ using the details you have from your application hosted on the Monzo Developers Portal.
+- Copy _config.example.js_ as _config.js_: `cp config.example.js config.js`
+- Add your credentials to _config.js_ using the details you have from your application hosted on the Monzo Developers Portal.
 
-At this point you can just run `npm install` and `npm start` to kick off the application. This isn't too convenient, as you would have to run this everytime to start yout app. So carry on with the following steps to build your application and add it to your application folder.
+At this point you can just run `npm install` and `npm start` to kick off the application. This isn't too convenient, as you would have to run this everytime to start your app. So carry on with the following steps to build your application and add it to your applications folder.
 
 ###### Run the build script to create .dmg:
-- Run `npm run dist` to begin the build process. This will create a `dist` directory within the repository.
-- Open the `.dmg` image within that directory.
+- Run `npm run dist` to begin the build process. This will create a _dist_ directory within the repository.
+- Open the _.dmg_ image within that directory.
 - Copy bankbar into your application folder.
 - ![](./app/images/icon.png) 🔝
 
