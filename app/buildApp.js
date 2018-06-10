@@ -17,7 +17,7 @@ const buildApp = async (store, tray) => {
   const subMenuPots = pots
     .filter(p => !p.deleted)
     .map(p => ({
-      label: `${p.name} - £${formatCurrency(p.balance, p.currency)}`,
+      label: `${p.name}: £${formatCurrency(p.balance, p.currency)}`,
     }));
 
   const formattedBalance = formatCurrency(balance, currency);
