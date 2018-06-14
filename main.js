@@ -26,8 +26,11 @@ app.on('ready', async () => {
 
   try {
     const tray = new Tray(`${imagesDir}/icon.png`);
+    debug(store.get());
+
     if (store.has('accessToken') && store.has('refreshToken')) {
       const whoAmI = await get(store, 'whoAmI');
+
       // todo: remove nested if
       if (whoAmI.authenticated) {
         buildApp(store, tray);

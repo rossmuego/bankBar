@@ -16,16 +16,16 @@ module.exports = async (store, endpoint) => {
     };
     const url = getUrl(endpoint, accountId);
     const fullUrl = `https://api.monzo.com${url}`;
+    debug(`fetching at: ${fullUrl}`);
     const response = await fetch(fullUrl, options);
     if (errorResponse(response)) {
-      debug('errorResponse %o:', response);
-      throw new Error(response);
+      debug('errorResponse %O:', response.status);
     }
     const jsonResponse = await response.json();
     debug('returning %o:', jsonResponse);
     return jsonResponse;
   } catch (err) {
-    debug('error %o:', err);
+    debug('error %O:', err);
     throw new Error(err);
   }
 };

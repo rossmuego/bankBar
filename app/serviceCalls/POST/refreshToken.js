@@ -23,7 +23,7 @@ module.exports = async (store) => {
       { method: 'POST', body: form },
     );
     if (errorResponse(response)) {
-      debug('errorResponse %o:', response);
+      debug('errorResponse %o:', response.json());
       throw new Error(response);
     }
     const jsonResponse = await response.json();
