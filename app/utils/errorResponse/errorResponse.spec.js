@@ -1,6 +1,6 @@
 const errorResponse = require('./errorResponse');
 
-describe('errorResponse should return if the response contains an error', () => {
+describe('errorResponse', () => {
   test('should return if the response code is 400', () => {
     const response = { status: 400 };
     const response2 = { status: '400' };

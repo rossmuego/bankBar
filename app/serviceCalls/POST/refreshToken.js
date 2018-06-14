@@ -27,6 +27,6 @@ module.exports = async (store) => {
     const jsonResponse = await response.json();
     return jsonResponse;
   } catch (err) {
-    throw new Error(`Error in getAccessToken: ${err}`);
+    throw new Error(`Error in getRefreshToken: ${err}`);
   }
 };

@@ -2,7 +2,7 @@ const { Menu } = require('electron'); // eslint-disable-line
 const buildApp = require('../buildApp');
 const config = require('../../config');
 const getAccessToken = require('../serviceCalls/POST/accessToken');
-const getAccount = require('../serviceCalls/GET/accounts');
+const get = require('../serviceCalls/GET/get');
 const getAuthCode = require('./getAuthCode');
 const server = require('./server');
 
@@ -16,7 +16,7 @@ const continueLogin = async (store, svr, tray) => {
     store.set('accessToken', accessToken.access_token);
     store.set('refreshToken', accessToken.refresh_token);
 
-    const accountId = await getAccount(store);
+    const accountId = await get(store, 'account');
     store.set('accountId', accountId.accounts[0].id);
     store.set('sortCode', accountId.accounts[0].sort_code);
     store.set('accountNo', accountId.accounts[0].account_number);

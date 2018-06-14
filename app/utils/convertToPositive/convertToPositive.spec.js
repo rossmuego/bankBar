@@ -1,6 +1,6 @@
 const convertToPositive = require('./convertToPositive');
 
-describe('convertToPositive should format the value negative value to a positive', () => {
+describe('convertToPositive', () => {
   test('should convert the negative value to a positive value', () => {
     const currency = 'en-gb';
     const balance = '-10';

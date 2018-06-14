@@ -1,6 +1,6 @@
 const { app, Tray } = require('electron'); // eslint-disable-line
 const buildApp = require('./app/buildApp');
-const getWhoAmI = require('./app/serviceCalls/GET/whoAmI');
+const get = require('./app/serviceCalls/GET/get');
 const login = require('./app/authentication/login');
 const getRefreshToken = require('./app/serviceCalls/POST/refreshToken');
 const path = require('path');
@@ -21,7 +21,7 @@ app.on('ready', async () => {
   try {
     const tray = new Tray(`${imagesDir}/icon.png`);
     if (store.has('accessToken') && store.has('refreshToken')) {
-      const whoAmI = await getWhoAmI(store);
+      const whoAmI = await get(store, 'whoAmI');
       console.log(`authenticated?: ${whoAmI.authenticated}`);
 
       // todo: remove nested if

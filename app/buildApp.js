@@ -3,14 +3,14 @@ const aboutMenu = require('../app/menus/about');
 const contactMenu = require('../app/menus/contact');
 const convertToPositive = require('./utils/convertToPositive/convertToPositive');
 const formatCurrency = require('./utils/formatCurrency/formatCurrency');
-const getBalance = require('./serviceCalls/GET/balance');
-const getPots = require('./serviceCalls/GET/pots');
+const get = require('./serviceCalls/GET/get');
 
 const buildApp = async (store, tray) => {
   console.log('in buildApp');
 
-  const balancePayload = await getBalance(store);
-  const potsList = await getPots(store);
+  const balancePayload = await get(store, 'balance');
+  const potsList = await get(store, 'pots');
+
   const { balance, currency, spend_today: spent } = balancePayload;
   const { pots } = potsList;
 
