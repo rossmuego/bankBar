@@ -1,9 +1,10 @@
 const fetch = require('node-fetch');
-const errorResponse = require('../../utils/errorResponse/errorResponse');
-const getUrl = require('../getUrl');
+const errorResponse = require('../utils/errorResponse/errorResponse');
+const getUrl = require('./getUrl');
+const debug = require('debug')('get');
 
 module.exports = async (store, endpoint) => {
-  console.log(`in get ${endpoint}`);
+  debug(`fetching ${endpoint}`);
 
   try {
     let accountId;
@@ -20,11 +21,14 @@ module.exports = async (store, endpoint) => {
     const fullUrl = `https://api.monzo.com${url}`;
     const response = await fetch(fullUrl, options);
     if (errorResponse(response)) {
-      throw new Error(`Response code: ${response.status}`);
+      debug('errorResponse %o:', response);
+      throw new Error(response);
     }
     const jsonResponse = await response.json();
+    debug('returning %o:', jsonResponse);
     return jsonResponse;
   } catch (err) {
-    throw new Error(`Error fetching get${endpoint}: ${err}`);
+    debug('error %o:', err);
+    throw new Error(err);
   }
 };

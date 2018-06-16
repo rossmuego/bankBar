@@ -1,7 +1,8 @@
 const { shell } = require('electron'); // eslint-disable-line
+const debug = require('debug')('getAuthCode');
 
 module.exports = (store) => {
-  console.log('in getAuthCode');
+  debug('asking user access to account');
 
   const clientId = store.get('clientId');
   const redirectUri = store.get('redirectUri');

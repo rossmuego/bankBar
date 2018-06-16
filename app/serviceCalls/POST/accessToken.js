@@ -1,9 +1,10 @@
 const fetch = require('node-fetch');
 const FormData = require('form-data');
 const errorResponse = require('../../utils/errorResponse/errorResponse');
+const debug = require('debug')('accessToken');
 
 module.exports = async (store) => {
-  console.log('in POSTaccessToken');
+  debug('in POSTaccessToken');
 
   try {
     const form = new FormData();
@@ -24,11 +25,14 @@ module.exports = async (store) => {
       { method: 'POST', body: form },
     );
     if (errorResponse(response)) {
-      throw new Error(`Error response code: ${response.status}`);
+      debug('errorResponse %o:', response);
+      throw new Error(response);
     }
     const jsonResponse = await response.json();
+    debug('returning %o:', jsonResponse);
     return jsonResponse;
   } catch (err) {
-    throw new Error(`Error in getAccessToken: ${err}`);
+    debug('error %o:', err);
+    throw new Error(err);
   }
 };

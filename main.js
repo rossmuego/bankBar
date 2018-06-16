@@ -1,10 +1,11 @@
 const { app, Tray } = require('electron'); // eslint-disable-line
 const buildApp = require('./app/buildApp');
-const get = require('./app/serviceCalls/GET/get');
+const get = require('./app/serviceCalls/get');
 const login = require('./app/authentication/login');
 const getRefreshToken = require('./app/serviceCalls/POST/refreshToken');
 const path = require('path');
 const Store = require('electron-store');
+const debug = require('debug')('main');
 
 const imagesDir = path.join(__dirname, '/app/images');
 
@@ -15,20 +16,18 @@ if (process.platform === 'darwin') {
 }
 
 app.on('ready', async () => {
-  // store.clear(); // uncoment to start from scratch
-  console.log('starting...');
+  store.clear(); // uncoment to start from scratch
+  debug('Starting bankbar...');
 
   try {
     const tray = new Tray(`${imagesDir}/icon.png`);
     if (store.has('accessToken') && store.has('refreshToken')) {
       const whoAmI = await get(store, 'whoAmI');
-      console.log(`authenticated?: ${whoAmI.authenticated}`);
-
       // todo: remove nested if
       if (whoAmI.authenticated) {
         buildApp(store, tray);
       } else {
-        console.log('refreshing token');
+        debug('not authenticated. refreshing token');
         const credentials = await getRefreshToken(store);
 
         store.set('accessToken', credentials.access_token);
@@ -37,12 +36,13 @@ app.on('ready', async () => {
         buildApp(store, tray);
       }
     } else {
+      debug('no accessToken or RefreshToken');
       login(store, tray);
     }
   } catch (err) {
-    console.log(`Error starting app: ${err}`);
+    debug(`Error starting app: ${err}`);
 
-    // clear and restart
+    // clear store and restart
     store.clear();
     app.relaunch();
     app.exit();

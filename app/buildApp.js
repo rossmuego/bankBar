@@ -3,10 +3,12 @@ const aboutMenu = require('../app/menus/about');
 const contactMenu = require('../app/menus/contact');
 const convertToPositive = require('./utils/convertToPositive/convertToPositive');
 const formatCurrency = require('./utils/formatCurrency/formatCurrency');
-const get = require('./serviceCalls/GET/get');
+const get = require('./serviceCalls/get');
+const debug = require('debug')('buildApp');
+
 
 const buildApp = async (store, tray) => {
-  console.log('in buildApp');
+  debug('building app');
 
   const balancePayload = await get(store, 'balance');
   const potsList = await get(store, 'pots');
@@ -54,7 +56,7 @@ const buildApp = async (store, tray) => {
   ]);
   tray.setContextMenu(appMenu);
 
-  console.log('app built!');
+  debug('app built!');
 };
 
 module.exports = async (store, tray) => {
