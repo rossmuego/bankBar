@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const { app, Tray } = require('electron'); // eslint-disable-line
 const buildApp = require('./app/buildApp');
 const get = require('./app/serviceCalls/get');
@@ -16,8 +18,11 @@ if (process.platform === 'darwin') {
 }
 
 app.on('ready', async () => {
-  // store.clear(); // uncoment to start from scratch
-  debug('Starting bankbar...');
+  debug('starting bankbar...');
+  if (process.env.CLEAR_STORE === 'true') {
+    store.clear();
+    debug('store cleared');
+  }
 
   try {
     const tray = new Tray(`${imagesDir}/icon.png`);
