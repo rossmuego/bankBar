@@ -1,12 +1,13 @@
 require('dotenv').config();
 
 const { app, Tray } = require('electron'); // eslint-disable-line
-const buildApp = require('./app/buildApp');
-const get = require('./app/serviceCalls/get');
 const login = require('./app/authentication/login');
-const getRefreshToken = require('./app/serviceCalls/POST/refreshToken');
 const path = require('path');
 const Store = require('electron-store');
+const checkAuth = require('./app/authentication/checkAuth');
+const oAuthWindow = require('./app/windows/OAuth/OAuthWindow');
+const buildApp = require('./app/buildApp');
+
 const debug = require('debug')('main');
 
 const imagesDir = path.join(__dirname, '/app/images');
@@ -28,31 +29,18 @@ app.on('ready', async () => {
     const tray = new Tray(`${imagesDir}/icon.png`);
     debug(store.get());
 
-    if (store.has('accessToken') && store.has('refreshToken')) {
-      const whoAmI = await get(store, 'whoAmI');
-
-      // todo: remove nested if
-      if (whoAmI.authenticated) {
-        buildApp(store, tray);
+    if (store.has('clientId') && store.has('clientSecret')) {
+      if (store.has('accessToken') && store.has('refreshToken')) {
+        await checkAuth(store, tray);
+        await buildApp(store, tray);
       } else {
-        debug('not authenticated. refreshing token');
-        const credentials = await getRefreshToken(store);
-
-        store.set('accessToken', credentials.access_token);
-        store.set('refreshToken', credentials.refresh_token);
-
-        buildApp(store, tray);
+        debug('no accessToken or RefreshToken');
+        login(store, tray);
       }
     } else {
-      debug('no accessToken or RefreshToken');
-      login(store, tray);
+      oAuthWindow(store);
     }
   } catch (err) {
     debug(`Error starting app: ${err}`);
-
-    // clear store and restart
-    store.clear();
-    app.relaunch();
-    app.exit();
   }
 });

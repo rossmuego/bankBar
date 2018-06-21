@@ -1,6 +1,6 @@
 const { Menu } = require('electron'); // eslint-disable-line
 const buildApp = require('../buildApp');
-const config = require('../../config');
+const restart = require('./restart');
 const getAccessToken = require('../serviceCalls/POST/accessToken');
 const get = require('../serviceCalls/get');
 const getAuthCode = require('./getAuthCode');
@@ -47,29 +47,19 @@ const startLogin = async (store, tray) => {
 module.exports = (store, tray) => {
   debug('logging in');
 
-  // clear store incase of errors
-  store.clear();
-
   try {
     debug('setting env values');
-    const {
-      CLIENT_ID: clientId,
-      CLIENT_SECRET: clientSecret,
-      REDIRECT_URI: redirectUri,
-    } = config;
 
-    store.set('clientId', clientId);
-    store.set('clientSecret', clientSecret);
-    store.set('redirectUri', redirectUri);
+    store.set('redirectUri', 'http://127.0.0.1:3456/');
   } catch (err) {
     debug('couldnt set env values');
   }
 
   const loginMenu = Menu.buildFromTemplate([
-    { label: 'Login', click() { startLogin(store, tray); } },
-    { type: 'separator' },
-    { label: 'Quit', role: 'quit' },
+    { label: 'Restart', click() { restart(store); } },
   ]);
   tray.setContextMenu(loginMenu);
-  debug('waiting for user to click login');
+
+  startLogin(store, tray);
 };
+

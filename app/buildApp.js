@@ -1,25 +1,17 @@
-const { Menu, clipboard } = require('electron'); // eslint-disable-line
+const { Menu, clipboard} = require('electron'); // eslint-disable-line
 const aboutMenu = require('../app/menus/about');
 const contactMenu = require('../app/menus/contact');
 const convertToPositive = require('./utils/convertToPositive/convertToPositive');
 const formatCurrency = require('./utils/formatCurrency/formatCurrency');
 const get = require('./serviceCalls/get');
 const debug = require('debug')('buildApp');
-const getRefreshToken = require('./serviceCalls/POST/refreshToken');
+const checkAuth = require('./authentication/checkAuth');
 
 const buildApp = async (store, tray) => {
   debug('building app');
 
   try {
-    // check if token is still valid
-    const whoAmI = await get(store, 'whoAmI');
-    if (whoAmI && !whoAmI.authenticated) {
-      debug('refreshing token while app running...');
-      const credentials = await getRefreshToken(store);
-
-      store.set('accessToken', credentials.access_token);
-      store.set('refreshToken', credentials.refresh_token);
-    }
+    await checkAuth(store, tray);
 
     const balancePayload = await get(store, 'balance');
     const potsList = await get(store, 'pots');

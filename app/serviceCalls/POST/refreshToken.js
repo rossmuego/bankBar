@@ -13,6 +13,8 @@ module.exports = async (store) => {
     const clientId = store.get('clientId');
     const clientSecret = store.get('clientSecret');
 
+    debug(refreshToken, clientId, clientSecret);
+
     form.append('grant_type', 'refresh_token');
     form.append('client_id', clientId);
     form.append('client_secret', clientSecret);
