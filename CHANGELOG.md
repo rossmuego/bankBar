@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.4.0"></a>
+# [0.4.0](https://github.com/johneas10/bankBar/compare/v0.3.0...v0.4.0) (2018-06-22)
+
+
+### Bug Fixes
+
+* **formatCurrency.js:** Replaced toFixed call with toLocaleString's minimumFractionDigits parameter. ([ab32961](https://github.com/johneas10/bankBar/commit/ab32961)), closes [#11](https://github.com/johneas10/bankBar/issues/11)
+* **main.js:** put store.clear behind env for safe development ([a56a0ef](https://github.com/johneas10/bankBar/commit/a56a0ef)), closes [#10](https://github.com/johneas10/bankBar/issues/10)
+* **store:** remove store.clear at start of app ([f753ef2](https://github.com/johneas10/bankBar/commit/f753ef2))
+
+
+### Features
+
+* Show transactions from current day ([1d86c7d](https://github.com/johneas10/bankBar/commit/1d86c7d))
+
+
+
 <a name="0.3.0"></a>
 # [0.3.0](https://github.com/johneas10/bankBar/compare/v0.2.1...v0.3.0) (2018-06-10)
 
