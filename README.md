@@ -19,12 +19,11 @@ Dark theme:
 
 ## Features
 - Shows your balance the menubar.
-- Shows todays spend.
+- Shows todays spend & transactions.
 - Shows pot balances.
 - Quick access to bank info (sort code/account number) with ability to quickly copy details.
 
 A few features I would like to add:
-- Recent Transactions. This is hard at the moment as the API doesn't let me download recent transactions without downloading ALL of them. This is very slow. I may just implement todays transactions, rather than the last 5 or 10. Not very usefull immediately after midnight..
 - Notifications. Currently not possible as the API doesn't support WebSockets.
 - Make the application more non-dev user friendly.
 
