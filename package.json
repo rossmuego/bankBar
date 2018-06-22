@@ -36,6 +36,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "release": "standard-version",
+    "publish": "git push --follow-tags origin master ",
     "commit": "git-cz",
     "lint": "eslint ."
   },
