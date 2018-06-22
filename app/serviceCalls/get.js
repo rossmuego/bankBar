@@ -7,10 +7,7 @@ module.exports = async (store, endpoint) => {
   debug(`fetching ${endpoint}`);
 
   try {
-    let accountId;
-    if (endpoint === 'balance') {
-      accountId = store.get('accountId');
-    }
+    const accountId = store.get('accountId');
     const accessToken = store.get('accessToken');
     const options = {
       headers: {

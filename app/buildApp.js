@@ -12,15 +12,25 @@ const buildApp = async (store, tray) => {
 
   const balancePayload = await get(store, 'balance');
   const potsList = await get(store, 'pots');
+  const transactionsList = await get(store, 'transactions');
 
   const { balance, currency, spend_today: spent } = balancePayload;
   const { pots } = potsList;
+  const { transactions } = transactionsList;
 
   const subMenuPots = pots
     .filter(p => !p.deleted)
     .map(p => ({
-      label: `${p.name}: £${formatCurrency(p.balance, p.currency)}`,
+      label: `${p.name}:  £${formatCurrency(p.balance, p.currency)}`,
     }));
+
+  const menuTransactions = transactions
+    .filter(t => t.scheme !== 'uk_retail_pot')
+    .filter(t => t.amount <= 0)
+    .map((t) => {
+      const merchantName = (t.merchant) ? t.merchant.name : t.description;
+      return ({ label: `${merchantName}:  £${convertToPositive(formatCurrency(t.amount, t.currency))}` });
+    });
 
   const formattedBalance = formatCurrency(balance, currency);
   const formattedSpend = formatCurrency(spent, currency);
@@ -32,7 +42,10 @@ const buildApp = async (store, tray) => {
   tray.setTitle(`£${formattedBalance}`);
 
   const appMenu = Menu.buildFromTemplate([
-    { label: `Spend today:  £${positiveFormattedSpend}` },
+    {
+      label: `Spend today:  £${positiveFormattedSpend}`,
+      submenu: menuTransactions,
+    },
     { type: 'separator' },
     {
       label: 'Pots',

@@ -5,11 +5,17 @@ describe('getUrl', () => {
     const accountId = 'abc123';
     const account = 'account';
     const balance = 'balance';
+    const transactions = 'transactions';
     const pots = 'pots';
     const whoAmI = 'whoAmI';
 
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayString = today.toISOString();
+
     expect(getUrl(account, accountId)).toBe('/accounts?account_type=uk_retail');
     expect(getUrl(balance, accountId)).toBe('/balance?account_id=abc123');
+    expect(getUrl(transactions, accountId)).toBe(`/transactions?account_id=abc123&since=${todayString}&expand[]=merchant`);
     expect(getUrl(pots, accountId)).toBe('/pots');
     expect(getUrl(whoAmI, accountId)).toBe('/ping/whoami');
   });
