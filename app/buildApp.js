@@ -37,7 +37,7 @@ const buildApp = async (store, tray) => {
 
     const transactionsSubmenu = transactions
       .filter(t => t.scheme !== 'uk_retail_pot')
-      .filter(t => t.amount <= 0)
+      .filter(t => t.amount < 0)
       .map((t) => {
         const merchantName = (t.merchant) ? t.merchant.name : t.description;
         return ({ label: `${merchantName}:  £${convertToPositive(formatCurrency(t.amount, t.currency))}` });
@@ -53,13 +53,10 @@ const buildApp = async (store, tray) => {
     const appMenu = Menu.buildFromTemplate([
       {
         label: `Spend today:  £${positiveFormattedSpend}`,
-        submenu: transactionsSubmenu,
+        submenu: transactionsSubmenu.length ? transactionsSubmenu.reverse() : null,
       },
       { type: 'separator' },
-      {
-        label: 'Pots',
-        submenu: potsSubmenu,
-      },
+      potsSubmenu.length ? { label: 'Pots', submenu: potsSubmenu } : { label: 'Pots', enabled: false },
       { type: 'separator' },
       {
         label: 'Bank Details',
