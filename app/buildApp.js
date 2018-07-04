@@ -1,6 +1,7 @@
-const { Menu, clipboard} = require('electron'); // eslint-disable-line
+const { Menu, clipboard } = require('electron'); // eslint-disable-line
 const aboutMenu = require('../app/menus/about');
 const contactMenu = require('../app/menus/contact');
+const optionsMenu = require('../app/menus/options');
 const convertToPositive = require('./utils/convertToPositive/convertToPositive');
 const formatCurrency = require('./utils/formatCurrency/formatCurrency');
 const get = require('./serviceCalls/get');
@@ -60,6 +61,7 @@ const buildApp = async (store, tray) => {
         ],
       },
       { type: 'separator' },
+      optionsMenu(store),
       contactMenu,
       aboutMenu,
       { type: 'separator' },

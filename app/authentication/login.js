@@ -1,6 +1,6 @@
 const { Menu } = require('electron'); // eslint-disable-line
 const buildApp = require('../buildApp');
-const restart = require('./restart');
+const restart = require('../utils/restart');
 const getAccessToken = require('../serviceCalls/POST/accessToken');
 const get = require('../serviceCalls/get');
 const getAuthCode = require('./getAuthCode');
