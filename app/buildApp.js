@@ -81,7 +81,7 @@ module.exports = async (store, tray) => {
   // initial build
   buildApp(store, tray);
 
-  // rebuild every hour
+  // rebuild every 10mins
   // todo: this is f*cking ugly
-  setInterval(buildApp, 3600000, store, tray);
+  setInterval(buildApp, 600000, store, tray);
 };
