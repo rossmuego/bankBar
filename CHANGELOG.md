@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.5.0"></a>
+# [0.5.0](https://github.com/johneas10/bankBar/compare/v0.4.2...v0.5.0) (2018-07-05)
+
+
+### Bug Fixes
+
+* **buildApp:** dont show submenus for pots & transactions if non exist ([df54878](https://github.com/johneas10/bankBar/commit/df54878)), closes [#18](https://github.com/johneas10/bankBar/issues/18)
+
+
+### Features
+
+* **logout:** add ability to clear data and log out ([fb7633e](https://github.com/johneas10/bankBar/commit/fb7633e))
+* **OAuth flow:** add window for user to enter OAuth credentials ([6f752da](https://github.com/johneas10/bankBar/commit/6f752da))
+
+
+
 <a name="0.4.2"></a>
 ## [0.4.2](https://github.com/johneas10/bankBar/compare/v0.4.1...v0.4.2) (2018-06-27)
 
