@@ -24,7 +24,6 @@
     "dotenv": "6.0.0",
     "electron-store": "1.3.0",
     "form-data": "2.3.2",
-    "hapi": "17.5.0",
     "node-fetch": "2.1.2"
   },
   "main": "main.js",
@@ -44,7 +43,15 @@
     "appId": "io.johneas.bankbar",
     "mac": {
       "icon": "app/images/icon-main.png"
-    }
+    },
+    "protocols": [
+      {
+        "name": "bankbar",
+        "schemes": [
+          "bankbar"
+        ]
+      }
+    ]
   },
   "config": {
     "commitizen": {

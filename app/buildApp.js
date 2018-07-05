@@ -82,10 +82,9 @@ const buildApp = async (store, tray) => {
 };
 
 module.exports = async (store, tray) => {
-  // initial build
   buildApp(store, tray);
 
   // rebuild every 10mins
-  // todo: this is f*cking ugly
+  // todo: change this when websockets available from api
   setInterval(buildApp, 600000, store, tray);
 };

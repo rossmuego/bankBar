@@ -1,18 +1,15 @@
-const { Menu } = require('electron'); // eslint-disable-line
+const { Menu, app } = require('electron'); // eslint-disable-line
 const buildApp = require('../buildApp');
-const restart = require('../utils/restart');
+const logout = require('./logout');
 const getAccessToken = require('../serviceCalls/POST/accessToken');
 const get = require('../serviceCalls/get');
 const getAuthCode = require('./getAuthCode');
-const server = require('./server');
 const debug = require('debug')('login');
 
-const continueLogin = async (store, svr, tray) => {
+const continueLogin = async (store, tray) => {
   debug('in continueLogin');
 
   try {
-    await svr.stop();
-    debug('server stopped');
     const accessToken = await getAccessToken(store);
     store.set('accessToken', accessToken.access_token);
     store.set('refreshToken', accessToken.refresh_token);
@@ -31,36 +28,31 @@ const continueLogin = async (store, svr, tray) => {
   }
 };
 
-// due to server, login split into two parts
-// todo: can they be merged?
-const startLogin = async (store, tray) => {
-  debug('login clicked');
-
-  try {
-    getAuthCode(store);
-    server(continueLogin, store, tray);
-  } catch (err) {
-    debug(`Error in startLogin: ${err}`);
-  }
-};
-
 module.exports = (store, tray) => {
   debug('logging in');
 
+  store.set('redirectUri', 'bankbar://redirect-uri/');
+
   try {
-    debug('setting env values');
+    const loginMenu = Menu.buildFromTemplate([
+      { label: 'Restart', click() { logout(store); } },
+      { label: 'Quit', role: 'quit' },
+    ]);
+    tray.setContextMenu(loginMenu);
 
-    store.set('redirectUri', 'http://127.0.0.1:3456/');
+    getAuthCode(store);
+
+    app.on('open-url', (event, url) => {
+      event.preventDefault();
+      const authorizationCode = url
+        .split('bankbar://redirect-uri/?code=')[1]
+        .split('&state=')[0];
+      debug(authorizationCode);
+      store.set('authorizationCode', authorizationCode);
+      continueLogin(store, tray);
+    });
   } catch (err) {
-    debug('couldnt set env values');
+    debug('couldnt start login');
   }
-
-  const loginMenu = Menu.buildFromTemplate([
-    { label: 'Restart', click() { restart(store); } },
-    { label: 'Quit', role: 'quit' },
-  ]);
-  tray.setContextMenu(loginMenu);
-
-  startLogin(store, tray);
 };
 
