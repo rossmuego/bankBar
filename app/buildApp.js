@@ -1,4 +1,4 @@
-const { Menu, clipboard } = require('electron'); // eslint-disable-line
+const { Menu, clipboard, app } = require('electron'); // eslint-disable-line
 const aboutMenu = require('../app/menus/about');
 const contactMenu = require('../app/menus/contact');
 const optionsMenu = require('../app/menus/options');
@@ -10,6 +10,10 @@ const checkAuth = require('./authentication/checkAuth');
 
 const buildApp = async (store, tray) => {
   debug('building app');
+
+  if (process.platform === 'darwin') {
+    app.dock.hide();
+  }
 
   try {
     await checkAuth(store, tray);

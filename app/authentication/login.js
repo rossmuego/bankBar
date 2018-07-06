@@ -57,6 +57,7 @@ module.exports = (store, tray) => {
 
   const loginMenu = Menu.buildFromTemplate([
     { label: 'Restart', click() { restart(store); } },
+    { label: 'Quit', role: 'quit' },
   ]);
   tray.setContextMenu(loginMenu);
 

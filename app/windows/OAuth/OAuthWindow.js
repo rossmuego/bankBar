@@ -1,33 +1,39 @@
-const { BrowserView, BrowserWindow, shell, ipcMain, app } = require('electron'); // eslint-disable-line
+const { BrowserWindow, shell, ipcMain, app, Menu } = require('electron'); // eslint-disable-line
 const debug = require('debug')('OAuth');
 
 module.exports = (store) => {
-  let win = new BrowserWindow({
+  let oAuthWindow = new BrowserWindow({
     width: 380,
     height: 380,
     titleBarStyle: 'hidden',
     resizable: false,
   });
 
-  win.on('closed', () => {
-    win = null;
+  oAuthWindow.loadFile('./app/windows/OAuth/index.html');
+
+  const oAuthMenu = [{
+    label: 'Application',
+    submenu: [
+      { label: 'About Application', selector: 'orderFrontStandardAboutPanel:' },
+      { type: 'separator' },
+      { label: 'Quit', accelerator: 'Command+Q', click() { app.quit(); } },
+    ],
+  },
+  {
+    label: 'Edit',
+    submenu: [
+      { label: 'Paste', accelerator: 'CmdOrCtrl+V', selector: 'paste:' },
+    ],
+  }];
+
+  Menu.setApplicationMenu(Menu.buildFromTemplate(oAuthMenu));
+
+  oAuthWindow.on('closed', () => {
+    oAuthWindow = null;
+    app.exit();
   });
 
-  const view = new BrowserView({
-    webPreferences: {
-      nodeIntegration: true,
-    },
-  });
-
-  win.setBrowserView(view);
-
-  view.setBounds({
-    x: 0, y: 0, width: 380, height: 380,
-  });
-
-  view.webContents.loadURL(`file://${__dirname}/index.html`);
-
-  view.webContents.on('will-navigate', (event, url) => {
+  oAuthWindow.webContents.on('will-navigate', (event, url) => {
     event.preventDefault();
     shell.openExternal(url);
   });

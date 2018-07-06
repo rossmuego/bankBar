@@ -1,22 +1,16 @@
 require('dotenv').config();
 
-const { app, Tray } = require('electron'); // eslint-disable-line
+const { app, Tray, Menu } = require('electron'); // eslint-disable-line
 const login = require('./app/authentication/login');
 const path = require('path');
 const Store = require('electron-store');
 const checkAuth = require('./app/authentication/checkAuth');
 const oAuthWindow = require('./app/windows/OAuth/OAuthWindow');
 const buildApp = require('./app/buildApp');
-
 const debug = require('debug')('main');
 
 const imagesDir = path.join(__dirname, '/app/images');
-
 const store = new Store();
-
-if (process.platform === 'darwin') {
-  app.dock.hide();
-}
 
 app.on('ready', async () => {
   debug('starting bankbar...');
@@ -38,6 +32,10 @@ app.on('ready', async () => {
         login(store, tray);
       }
     } else {
+      const loginMenu = Menu.buildFromTemplate([
+        { label: 'Waiting to Authenticate' },
+      ]);
+      tray.setContextMenu(loginMenu);
       oAuthWindow(store);
     }
   } catch (err) {
