@@ -69,6 +69,8 @@ const buildApp = async (store, tray) => {
       contactMenu,
       aboutMenu,
       { type: 'separator' },
+      { label: 'Manual Refresh', click() { buildApp(store, tray); } },
+      { type: 'separator' },
       { label: 'Quit', role: 'quit' },
     ]);
 
