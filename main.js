@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const { app, Tray } = require('electron'); // eslint-disable-line
+const { app, Tray, Menu } = require('electron'); // eslint-disable-line
 const Store = require('electron-store');
 const path = require('path');
 const login = require('./app/authentication/login');
@@ -9,6 +9,9 @@ const debug = require('debug')('main');
 
 const imagesDir = path.join(__dirname, '/app/images');
 const store = new Store();
+
+const contactMenu = require('./app/menus/contact');
+const logout = require('./app/authentication/logout');
 
 app.setAsDefaultProtocolClient('bankbar');
 
@@ -27,6 +30,14 @@ app.on('ready', async () => {
 
   try {
     const tray = new Tray(`${imagesDir}/icon.png`);
+
+    const authMenu = Menu.buildFromTemplate([
+      contactMenu,
+      { label: 'Restart', click() { logout(store); } },
+      { label: 'Quit', role: 'quit' },
+    ]);
+    tray.setContextMenu(authMenu);
+
     debug(store.get());
 
     if (

@@ -1,10 +1,8 @@
-const { Menu, app } = require('electron'); // eslint-disable-line
+const { app } = require('electron'); // eslint-disable-line
 const debug = require('debug')('login');
 const buildApp = require('../buildApp');
-const contactMenu = require('../menus/contact');
 const get = require('../serviceCalls/get');
 const getAuthCode = require('./getAuthCode');
-const logout = require('./logout');
 const oAuthWindow = require('../windows/OAuth/OAuthWindow');
 const setAccessToken = require('../serviceCalls/POST/accessToken');
 
@@ -28,13 +26,6 @@ const continueLogin = async (store, tray) => {
 };
 
 module.exports = (store, tray) => {
-  const authMenu = Menu.buildFromTemplate([
-    contactMenu,
-    { label: 'Restart', click() { logout(store); } },
-    { label: 'Quit', role: 'quit' },
-  ]);
-  tray.setContextMenu(authMenu);
-
   try {
     if (
       store.has('clientId') &&

@@ -1,3 +1,4 @@
+const { Notification } = require('electron'); // eslint-disable-line
 const fetch = require('node-fetch');
 const errorResponse = require('../utils/errorResponse/errorResponse');
 const getUrl = require('./getUrl');
@@ -19,13 +20,13 @@ module.exports = async (store, endpoint) => {
     debug(`fetching at: ${fullUrl}`);
     const response = await fetch(fullUrl, options);
     if (errorResponse(response)) {
-      debug('errorResponse %O:', response.status);
+      throw response;
     }
     const jsonResponse = await response.json();
     debug('returning %o:', jsonResponse);
     return jsonResponse;
   } catch (err) {
-    debug('error %O:', err);
-    throw new Error(err);
+    debug(`get ${endpoint} error`);
+    throw err;
   }
 };

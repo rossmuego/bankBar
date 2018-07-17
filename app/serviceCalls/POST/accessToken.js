@@ -25,16 +25,14 @@ module.exports = async (store) => {
       { method: 'POST', body: form },
     );
     if (errorResponse(response)) {
-      debug('errorResponse %o:', response.json());
-      throw new Error(response);
+      throw response;
     }
     const jsonResponse = await response.json();
-    debug('returning %o:', jsonResponse);
 
     store.set('accessToken', jsonResponse.access_token);
     store.set('refreshToken', jsonResponse.refresh_token);
   } catch (err) {
-    debug('error %o:', err);
-    throw new Error(err);
+    debug('accessToken error');
+    throw err;
   }
 };

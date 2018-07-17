@@ -7,6 +7,7 @@ const formatCurrency = require('./utils/formatCurrency/formatCurrency');
 const get = require('./serviceCalls/get');
 const optionsMenu = require('../app/menus/options');
 const refreshToken = require('./serviceCalls/POST/refreshToken');
+const showNotification = require('./notifications/showNotification');
 
 const buildApp = async (store, tray) => {
   debug('building app');
@@ -79,6 +80,7 @@ const buildApp = async (store, tray) => {
 
     debug('app built!');
   } catch (err) {
+    showNotification(err);
     debug('error building app: ', err);
   }
 };
