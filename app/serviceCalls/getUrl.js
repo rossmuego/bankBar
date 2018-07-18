@@ -8,8 +8,6 @@ module.exports = (endpoint, accountId) => {
       return `/transactions?account_id=${accountId}&since=${new Date(new Date().setHours(0, 0, 0, 0)).toISOString()}&expand[]=merchant`;
     case 'pots':
       return '/pots';
-    case 'whoAmI':
-      return '/ping/whoami';
     default:
       throw new Error('Incorrect Endpoint');
   }

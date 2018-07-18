@@ -9,30 +9,30 @@ module.exports = async (store) => {
   try {
     const form = new FormData();
 
-    const refreshToken = store.get('refreshToken');
     const clientId = store.get('clientId');
     const clientSecret = store.get('clientSecret');
+    const refreshToken = store.get('refreshToken');
 
-    debug(refreshToken, clientId, clientSecret);
-
-    form.append('grant_type', 'refresh_token');
     form.append('client_id', clientId);
     form.append('client_secret', clientSecret);
     form.append('refresh_token', refreshToken);
+    form.append('grant_type', 'refresh_token');
 
     const response = await fetch(
       'https://api.monzo.com/oauth2/token',
       { method: 'POST', body: form },
     );
     if (errorResponse(response)) {
-      debug('errorResponse %o:', response.json());
+      debug(response);
+      debug('errorResponse %o:', JSON.stringify(response.json()));
       throw new Error(response);
     }
     const jsonResponse = await response.json();
-    debug('returning %o:', jsonResponse);
-    return jsonResponse;
+
+    store.set('accessToken', jsonResponse.access_token);
+    store.set('refreshToken', jsonResponse.refresh_token);
   } catch (err) {
-    debug('error %o:', err);
+    debug('error %o:', JSON.stringify(err));
     throw new Error(err);
   }
 };

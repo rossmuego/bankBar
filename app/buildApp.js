@@ -1,12 +1,12 @@
 const { Menu, clipboard, app } = require('electron'); // eslint-disable-line
+const debug = require('debug')('buildApp');
 const aboutMenu = require('../app/menus/about');
 const contactMenu = require('../app/menus/contact');
-const optionsMenu = require('../app/menus/options');
 const convertToPositive = require('./utils/convertToPositive/convertToPositive');
 const formatCurrency = require('./utils/formatCurrency/formatCurrency');
 const get = require('./serviceCalls/get');
-const debug = require('debug')('buildApp');
-const checkAuth = require('./authentication/checkAuth');
+const optionsMenu = require('../app/menus/options');
+const refreshToken = require('./serviceCalls/POST/refreshToken');
 
 const buildApp = async (store, tray) => {
   debug('building app');
@@ -16,7 +16,7 @@ const buildApp = async (store, tray) => {
   }
 
   try {
-    await checkAuth(store, tray);
+    await refreshToken(store);
 
     const balancePayload = await get(store, 'balance');
     const potsList = await get(store, 'pots');

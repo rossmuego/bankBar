@@ -1,16 +1,22 @@
 require('dotenv').config();
 
-const { app, Tray, Menu } = require('electron'); // eslint-disable-line
-const login = require('./app/authentication/login');
-const path = require('path');
+const { app, Tray } = require('electron'); // eslint-disable-line
 const Store = require('electron-store');
-const checkAuth = require('./app/authentication/checkAuth');
-const oAuthWindow = require('./app/windows/OAuth/OAuthWindow');
+const path = require('path');
+const login = require('./app/authentication/login');
 const buildApp = require('./app/buildApp');
 const debug = require('debug')('main');
 
 const imagesDir = path.join(__dirname, '/app/images');
 const store = new Store();
+
+app.setAsDefaultProtocolClient('bankbar');
+
+const isSecondInstance = app.makeSingleInstance((commandLine) => { }); // eslint-disable-line
+if (isSecondInstance) {
+  debug('Quitting second instance');
+  app.quit();
+}
 
 app.on('ready', async () => {
   debug('starting bankbar...');
@@ -23,20 +29,15 @@ app.on('ready', async () => {
     const tray = new Tray(`${imagesDir}/icon.png`);
     debug(store.get());
 
-    if (store.has('clientId') && store.has('clientSecret')) {
-      if (store.has('accessToken') && store.has('refreshToken')) {
-        await checkAuth(store, tray);
-        await buildApp(store, tray);
-      } else {
-        debug('no accessToken or RefreshToken');
-        login(store, tray);
-      }
+    if (
+      store.has('clientId') &&
+      store.has('clientSecret') &&
+      store.has('accessToken') &&
+      store.has('refreshToken')
+    ) {
+      await buildApp(store, tray);
     } else {
-      const loginMenu = Menu.buildFromTemplate([
-        { label: 'Waiting to Authenticate' },
-      ]);
-      tray.setContextMenu(loginMenu);
-      oAuthWindow(store);
+      login(store, tray);
     }
   } catch (err) {
     debug(`Error starting app: ${err}`);

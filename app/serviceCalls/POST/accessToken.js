@@ -30,7 +30,9 @@ module.exports = async (store) => {
     }
     const jsonResponse = await response.json();
     debug('returning %o:', jsonResponse);
-    return jsonResponse;
+
+    store.set('accessToken', jsonResponse.access_token);
+    store.set('refreshToken', jsonResponse.refresh_token);
   } catch (err) {
     debug('error %o:', err);
     throw new Error(err);
