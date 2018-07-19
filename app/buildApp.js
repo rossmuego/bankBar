@@ -7,7 +7,7 @@ const formatCurrency = require('./utils/formatCurrency/formatCurrency');
 const get = require('./serviceCalls/get');
 const optionsMenu = require('../app/menus/options');
 const refreshToken = require('./serviceCalls/POST/refreshToken');
-const showNotification = require('./notifications/showNotification');
+const showErrorNotification = require('./notifications/showErrorNotification');
 
 const buildApp = async (store, tray) => {
   debug('building app');
@@ -18,6 +18,8 @@ const buildApp = async (store, tray) => {
 
   try {
     await refreshToken(store);
+
+    debug(`new access token: ${store.get('accessToken')}`);
 
     const balancePayload = await get(store, 'balance');
     const potsList = await get(store, 'pots');
@@ -80,7 +82,7 @@ const buildApp = async (store, tray) => {
 
     debug('app built!');
   } catch (err) {
-    showNotification(err);
+    showErrorNotification(err);
     debug('error building app: ', err);
   }
 };

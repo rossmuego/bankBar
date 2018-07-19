@@ -5,6 +5,7 @@ const get = require('../serviceCalls/get');
 const getAuthCode = require('./getAuthCode');
 const oAuthWindow = require('../windows/OAuth/OAuthWindow');
 const setAccessToken = require('../serviceCalls/POST/accessToken');
+const showNotification = require('../notifications/showSuccessNotification');
 
 const continueLogin = async (store, tray) => {
   debug('in continueLogin');
@@ -13,12 +14,18 @@ const continueLogin = async (store, tray) => {
     await setAccessToken(store);
     const accountId = await get(store, 'account');
 
+    store.set('firstName', accountId.accounts[0].owners[0].preferred_first_name);
     store.set('accountId', accountId.accounts[0].id);
     store.set('sortCode', accountId.accounts[0].sort_code);
     store.set('accountNo', accountId.accounts[0].account_number);
 
     debug('user setup!');
 
+    const notificationOptions = {
+      name: store.get('firstName'),
+    };
+
+    showNotification({ type: 'login', notificationOptions });
     buildApp(store, tray);
   } catch (err) {
     debug(`Error in continueLogin: ${err}`);
