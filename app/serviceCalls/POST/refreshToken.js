@@ -4,7 +4,7 @@ const errorResponse = require('../../utils/errorResponse/errorResponse');
 const debug = require('debug')('refreshToken');
 
 module.exports = async (store) => {
-  debug('in POSTrefreshToken');
+  debug('Refreshing token');
 
   try {
     const form = new FormData();
@@ -29,8 +29,10 @@ module.exports = async (store) => {
 
     store.set('accessToken', jsonResponse.access_token);
     store.set('refreshToken', jsonResponse.refresh_token);
+
+    debug('Success refreshing access token');
   } catch (err) {
-    debug('refreshToken error');
+    debug('Error: ', err);
     throw err;
   }
 };

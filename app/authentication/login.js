@@ -6,9 +6,10 @@ const getAuthCode = require('./getAuthCode');
 const oAuthWindow = require('../windows/OAuth/OAuthWindow');
 const setAccessToken = require('../serviceCalls/POST/accessToken');
 const showNotification = require('../notifications/showSuccessNotification');
+const showErrorNotification = require('../notifications/showErrorNotification');
 
 const continueLogin = async (store, tray) => {
-  debug('in continueLogin');
+  debug('Continuing login');
 
   try {
     await setAccessToken(store);
@@ -19,8 +20,6 @@ const continueLogin = async (store, tray) => {
     store.set('sortCode', accountId.accounts[0].sort_code);
     store.set('accountNo', accountId.accounts[0].account_number);
 
-    debug('user setup!');
-
     const notificationOptions = {
       name: store.get('firstName'),
     };
@@ -28,11 +27,14 @@ const continueLogin = async (store, tray) => {
     showNotification({ type: 'login', notificationOptions });
     buildApp(store, tray);
   } catch (err) {
-    debug(`Error in continueLogin: ${err}`);
+    showErrorNotification(err);
+    debug('Error: ', err);
   }
 };
 
 module.exports = (store, tray) => {
+  debug('Logging in');
+
   try {
     if (
       store.has('clientId') &&
@@ -46,7 +48,6 @@ module.exports = (store, tray) => {
         const authorizationCode = url
           .split('bankbar://redirect-uri/?code=')[1]
           .split('&state=')[0];
-        debug(authorizationCode);
 
         store.set('authorizationCode', authorizationCode);
         continueLogin(store, tray);
@@ -55,7 +56,8 @@ module.exports = (store, tray) => {
       oAuthWindow(store);
     }
   } catch (err) {
-    debug('couldnt start login');
+    showErrorNotification(err);
+    debug('Error: ', err);
   }
 };
 

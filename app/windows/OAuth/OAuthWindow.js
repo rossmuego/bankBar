@@ -2,6 +2,8 @@ const { BrowserWindow, shell, ipcMain, app, Menu } = require('electron'); // esl
 const debug = require('debug')('OAuth');
 
 module.exports = (store) => {
+  debug('Displaying OAuth window');
+
   let oAuthWindow = new BrowserWindow({
     width: 380,
     height: 380,
@@ -39,7 +41,6 @@ module.exports = (store) => {
   });
 
   ipcMain.on('oAuthInput', (event, payload) => {
-    debug(payload);
     store.set(payload);
     app.relaunch();
     app.exit();

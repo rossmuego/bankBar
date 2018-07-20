@@ -10,7 +10,7 @@ const refreshToken = require('./serviceCalls/POST/refreshToken');
 const showErrorNotification = require('./notifications/showErrorNotification');
 
 const buildApp = async (store, tray) => {
-  debug('building app');
+  debug('Building App');
 
   if (process.platform === 'darwin') {
     app.dock.hide();
@@ -18,8 +18,6 @@ const buildApp = async (store, tray) => {
 
   try {
     await refreshToken(store);
-
-    debug(`new access token: ${store.get('accessToken')}`);
 
     const balancePayload = await get(store, 'balance');
     const potsList = await get(store, 'pots');
@@ -80,10 +78,11 @@ const buildApp = async (store, tray) => {
     tray.setTitle(`£${formattedBalance}`);
     tray.setContextMenu(appMenu);
 
-    debug('app built!');
+    debug('App built');
+    debug('New state: %O', store.get());
   } catch (err) {
     showErrorNotification(err);
-    debug('error building app: ', err);
+    debug('Error: ', err);
   }
 };
 

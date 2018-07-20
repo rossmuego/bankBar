@@ -1,11 +1,10 @@
-const { Notification } = require('electron'); // eslint-disable-line
 const fetch = require('node-fetch');
 const errorResponse = require('../utils/errorResponse/errorResponse');
 const getUrl = require('./getUrl');
 const debug = require('debug')('get');
 
 module.exports = async (store, endpoint) => {
-  debug(`fetching ${endpoint}`);
+  debug(`Fetching ${endpoint}`);
 
   try {
     const accountId = store.get('accountId');
@@ -17,16 +16,15 @@ module.exports = async (store, endpoint) => {
     };
     const url = getUrl(endpoint, accountId);
     const fullUrl = `https://api.monzo.com${url}`;
-    debug(`fetching at: ${fullUrl}`);
     const response = await fetch(fullUrl, options);
     if (errorResponse(response)) {
       throw response;
     }
     const jsonResponse = await response.json();
-    debug('returning %o:', jsonResponse);
+    debug(`Success fetching ${endpoint}`);
     return jsonResponse;
   } catch (err) {
-    debug(`get ${endpoint} error`);
+    debug('Error: ', err);
     throw err;
   }
 };

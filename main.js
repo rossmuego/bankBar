@@ -3,15 +3,15 @@ require('dotenv').config();
 const { app, Tray, Menu } = require('electron'); // eslint-disable-line
 const Store = require('electron-store');
 const path = require('path');
+const debug = require('debug')('main');
 const login = require('./app/authentication/login');
 const buildApp = require('./app/buildApp');
-const debug = require('debug')('main');
+const contactMenu = require('./app/menus/contact');
+const logout = require('./app/authentication/logout');
+const showErrorNotification = require('./app/notifications/showErrorNotification');
 
 const imagesDir = path.join(__dirname, '/app/images');
 const store = new Store();
-
-const contactMenu = require('./app/menus/contact');
-const logout = require('./app/authentication/logout');
 
 app.setAsDefaultProtocolClient('bankbar');
 
@@ -22,11 +22,12 @@ if (isSecondInstance) {
 }
 
 app.on('ready', async () => {
-  debug('starting bankbar...');
+  debug('Starting app');
   if (process.env.CLEAR_STORE === 'true') {
     store.clear();
     debug('store cleared');
   }
+  debug('Starting state: %O', store.get());
 
   try {
     const tray = new Tray(`${imagesDir}/icon.png`);
@@ -37,8 +38,6 @@ app.on('ready', async () => {
       { label: 'Quit', role: 'quit' },
     ]);
     tray.setContextMenu(authMenu);
-
-    debug(store.get());
 
     if (
       store.has('clientId') &&
@@ -51,6 +50,7 @@ app.on('ready', async () => {
       login(store, tray);
     }
   } catch (err) {
-    debug(`Error starting app: ${err}`);
+    showErrorNotification(err);
+    debug('Error: ', err);
   }
 });
