@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.7.0"></a>
+# [0.7.0](https://github.com/johneas10/bankBar/compare/v0.6.0...v0.7.0) (2018-07-23)
+
+
+### Features
+
+* **buildApp:** add manual refresh ([28d204d](https://github.com/johneas10/bankBar/commit/28d204d))
+* **contact:** add slack link ([1a910f0](https://github.com/johneas10/bankBar/commit/1a910f0))
+* **notifications:** add error notifications ([f523dc6](https://github.com/johneas10/bankBar/commit/f523dc6))
+* **notifications:** add login success notification ([7064b9e](https://github.com/johneas10/bankBar/commit/7064b9e))
+
+
+
 <a name="0.6.0"></a>
 # [0.6.0](https://github.com/johneas10/bankBar/compare/v0.5.2...v0.6.0) (2018-07-12)
 
