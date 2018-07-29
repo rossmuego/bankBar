@@ -40,14 +40,12 @@ module.exports = (store, tray) => {
       store.has('clientId') &&
       store.has('clientSecret')
     ) {
-      store.set('redirectUri', 'bankbar://redirect-uri/');
+      store.set('redirectUri', 'https://johneas.io/bankbar/auth/');
       getAuthCode(store);
 
       app.on('open-url', (event, url) => {
         event.preventDefault();
-        const authorizationCode = url
-          .split('bankbar://redirect-uri/?code=')[1]
-          .split('&state=')[0];
+        const authorizationCode = url.split('bankbar://')[1];
 
         store.set('authorizationCode', authorizationCode);
         continueLogin(store, tray);

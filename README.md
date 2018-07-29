@@ -29,7 +29,7 @@ Dark theme:
 - Quick access to bank info (sort code/account number) with ability to quickly copy details.
 
 A few features I would like to add:
-- Notifications. Currently not possible as the API doesn't support WebSockets.
+- Instant notifications. Currently not possible as the API doesn't support WebSockets.
 
 ## Limitations
 Due to Monzo only allowing 20 users per OAuth application, I am unable to distribute a fully packaged app. There are instructions below on how you can do this yourself.
@@ -41,7 +41,11 @@ Unfortunately Monzo won't be lifting this limit anytime soon due to apps potenti
 ###### Aquire application credentials:
 - Go to the [Developers Portal](https://developers.monzo.com/) and sign in with the email address associated with your Monzo account.
 - Go to [Clients](https://developers.monzo.com/apps/home) in the top right corner, and create a New OAuth Client.
-- Fill in the blanks but make sure that: `Redirect URLs` is set to `bankbar://redirect-uri/` and `Confidentiality` is set to `Confidential`.
+- Fill in the blanks but make sure that: `Redirect URLs` is set to `https://johneas.io/bankbar/auth/` and `Confidentiality` is set to `Confidential`.
+
+_Please note:_
+
+_The redirect URL is currently setup as a proxy and doesn't save any information. This was implemented because some email clients were stripping out custom protocols. The code can be found [here](https://github.com/johneas10/bankbar-proxy)._
 
 ###### Download application & enter your credentials:
 - Download the latest _.dmg_ from [here](https://github.com/johneas10/bankBar/releases) and copy the application to your applications folder.
