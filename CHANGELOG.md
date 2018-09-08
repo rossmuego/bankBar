@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.7.2"></a>
+## [0.7.2](https://github.com/johneas10/bankBar/compare/v0.7.1...v0.7.2) (2018-09-08)
+
+
+### Bug Fixes
+
+* text washed out when swapping between light & dark mode ([0be1ead](https://github.com/johneas10/bankBar/commit/0be1ead)), closes [#12](https://github.com/johneas10/bankBar/issues/12)
+
+
+
 <a name="0.7.1"></a>
 ## [0.7.1](https://github.com/johneas10/bankBar/compare/v0.7.0...v0.7.1) (2018-07-30)
 
