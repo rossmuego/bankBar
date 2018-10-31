@@ -29,9 +29,16 @@ const buildApp = async (store, tray) => {
 
     const potsSubmenu = pots
       .filter(p => !p.deleted)
-      .map(p => ({
-        label: `${p.name}:  £${formatCurrency(p.balance, p.currency)}`,
-      }));
+      .map((p) => {
+        /*
+        electron doesn't support single '&'
+        see https://github.com/electron/electron/issues/9584
+        */
+        const name = p.name.replace('&', '&&');
+        return ({
+          label: `${name}:  £${formatCurrency(p.balance, p.currency)}`,
+        });
+      });
 
     const transactionsSubmenu = transactions
       .filter(t => t.scheme !== 'uk_retail_pot')
