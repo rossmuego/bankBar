@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.7.3"></a>
+## [0.7.3](https://github.com/johneas10/bankBar/compare/v0.7.2...v0.7.3) (2018-10-31)
+
+
+### Bug Fixes
+
+* display ampersands correctly ([3dc06b8](https://github.com/johneas10/bankBar/commit/3dc06b8)), closes [#20](https://github.com/johneas10/bankBar/issues/20)
+
+
+
 <a name="0.7.2"></a>
 ## [0.7.2](https://github.com/johneas10/bankBar/compare/v0.7.1...v0.7.2) (2018-09-08)
 

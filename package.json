@@ -1,6 +1,6 @@
 {
   "name": "bankbar",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "An Electron based menubar application",
   "license": "MIT",
   "author": "John Easton",
