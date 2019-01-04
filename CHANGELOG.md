@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/johneas10/bankBar/compare/v0.7.3...v1.0.0) (2019-01-04)
+
+
+### Bug Fixes
+
+* **main.js:** replace app.makeSingleInstance for electron 4 ([045d143](https://github.com/johneas10/bankBar/commit/045d143))
+
+
+### Code Refactoring
+
+* update login auth proxy ([e117ab7](https://github.com/johneas10/bankBar/commit/e117ab7))
+
+
+### BREAKING CHANGES
+
+* **main.js:** removed depricated method app.makeSingleInstance() and replaced with
+app.requestSingleInstanceLock()
+* new auth proxy hosted with heroku replaces old server
+
+
+
 <a name="0.7.3"></a>
 ## [0.7.3](https://github.com/johneas10/bankBar/compare/v0.7.2...v0.7.3) (2018-10-31)
 
