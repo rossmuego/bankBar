@@ -40,7 +40,7 @@ module.exports = (store, tray) => {
 
   try {
     if (store.has('clientId') && store.has('clientSecret')) {
-      store.set('redirectUri', 'https://johneas.io/bankbar/auth/');
+      store.set('redirectUri', 'https://bankbar-auth.herokuapp.com/');
       getAuthCode(store);
 
       app.on('open-url', (event, url) => {
