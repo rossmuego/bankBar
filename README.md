@@ -41,7 +41,7 @@ Unfortunately Monzo won't be lifting this limit anytime soon due to apps potenti
 ###### Aquire application credentials:
 - Go to the [Developers Portal](https://developers.monzo.com/) and sign in with the email address associated with your Monzo account.
 - Go to [Clients](https://developers.monzo.com/apps/home) in the top right corner, and create a New OAuth Client.
-- Fill in the blanks but make sure that: `Redirect URLs` is set to `https://johneas.io/bankbar/auth/` and `Confidentiality` is set to `Confidential`.
+- Fill in the blanks but make sure that: `Redirect URLs` is set to `https://bankbar-auth.herokuapp.com/` and `Confidentiality` is set to `Confidential`.
 
 _Please note:_
 
