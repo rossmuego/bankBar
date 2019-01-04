@@ -6,5 +6,7 @@ module.exports = (store) => {
 
   const clientId = store.get('clientId');
   const redirectUri = store.get('redirectUri');
-  shell.openExternal(`https://auth.monzo.com/?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code`);
+  shell.openExternal(
+    `https://auth.monzo.com/?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code`
+  );
 };

@@ -12,12 +12,19 @@
     "electron": "3.0.6",
     "electron-builder": "20.19.2",
     "eslint": "4.19.1",
-    "eslint-config-airbnb-base": "12.1.0",
-    "eslint-plugin-import": "2.11.0",
+    "eslint-config-prettier": "3.3.0",
+    "eslint-config-standard": "12.0.0",
+    "eslint-plugin-import": "2.14.0",
+    "eslint-plugin-node": "8.0.0",
+    "eslint-plugin-prettier": "3.0.0",
+    "eslint-plugin-promise": "4.0.1",
+    "eslint-plugin-react": "7.11.1",
+    "eslint-plugin-standard": "4.0.0",
     "fetch-mock": "6.3.0",
     "husky": "1.0.0-rc.8",
     "jest": "22.4.3",
-    "standard-version": "4.3.0"
+    "standard-version": "4.3.0",
+    "prettier": "1.15.3"
   },
   "dependencies": {
     "debug": "3.1.0",
@@ -37,7 +44,8 @@
     "release": "standard-version",
     "publish": "git push --follow-tags origin master ",
     "commit": "git-cz",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "build": {
     "appId": "io.johneas.bankbar",

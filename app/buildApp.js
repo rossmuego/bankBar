@@ -28,24 +28,28 @@ const buildApp = async (store, tray) => {
     const { transactions } = transactionsList;
 
     const potsSubmenu = pots
-      .filter(p => !p.deleted)
+      .filter((p) => !p.deleted)
       .map((p) => {
         /*
         electron doesn't support single '&'
         see https://github.com/electron/electron/issues/9584
         */
         const name = p.name.replace('&', '&&');
-        return ({
-          label: `${name}:  £${formatCurrency(p.balance, p.currency)}`,
-        });
+        return {
+          label: `${name}:  £${formatCurrency(p.balance, p.currency)}`
+        };
       });
 
     const transactionsSubmenu = transactions
-      .filter(t => t.scheme !== 'uk_retail_pot')
-      .filter(t => t.amount < 0)
+      .filter((t) => t.scheme !== 'uk_retail_pot')
+      .filter((t) => t.amount < 0)
       .map((t) => {
-        const merchantName = (t.merchant) ? t.merchant.name : t.description;
-        return ({ label: `${merchantName}:  £${convertToPositive(formatCurrency(t.amount, t.currency))}` });
+        const merchantName = t.merchant ? t.merchant.name : t.description;
+        return {
+          label: `${merchantName}:  £${convertToPositive(
+            formatCurrency(t.amount, t.currency)
+          )}`
+        };
       });
 
     const formattedBalance = formatCurrency(balance, currency);
@@ -58,28 +62,47 @@ const buildApp = async (store, tray) => {
     const appMenu = Menu.buildFromTemplate([
       {
         label: `Spend today:  £${positiveFormattedSpend}`,
-        submenu: transactionsSubmenu.length ? transactionsSubmenu.reverse() : null,
+        submenu: transactionsSubmenu.length
+          ? transactionsSubmenu.reverse()
+          : null
       },
       { type: 'separator' },
-      potsSubmenu.length ? { label: 'Pots', submenu: potsSubmenu } : { label: 'Pots', enabled: false },
+      potsSubmenu.length
+        ? { label: 'Pots', submenu: potsSubmenu }
+        : { label: 'Pots', enabled: false },
       { type: 'separator' },
       {
         label: 'Bank Details',
         submenu: [
-          { label: `s/c: ${sortCode}`, click() { clipboard.writeText(sortCode); } },
-          { label: `acc: ${accountNo}`, click() { clipboard.writeText(accountNo); } },
+          {
+            label: `s/c: ${sortCode}`,
+            click() {
+              clipboard.writeText(sortCode);
+            }
+          },
+          {
+            label: `acc: ${accountNo}`,
+            click() {
+              clipboard.writeText(accountNo);
+            }
+          },
           { type: 'separator' },
-          { label: '(click to copy)', enabled: false },
-        ],
+          { label: '(click to copy)', enabled: false }
+        ]
       },
       { type: 'separator' },
       optionsMenu(store),
       contactMenu,
       aboutMenu,
       { type: 'separator' },
-      { label: 'Manual Refresh', click() { buildApp(store, tray); } },
+      {
+        label: 'Manual Refresh',
+        click() {
+          buildApp(store, tray);
+        }
+      },
       { type: 'separator' },
-      { label: 'Quit', role: 'quit' },
+      { label: 'Quit', role: 'quit' }
     ]);
 
     tray.setTitle(`£${formattedBalance}`);

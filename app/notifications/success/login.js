@@ -8,6 +8,6 @@ module.exports = (options) => {
     title: 'Bankbar',
     subtitle: `Congratulations ${name}`,
     body: 'You can successfully authenticated with Monzo',
-    icon: `${imagesDir}/app-icon.png`,
+    icon: `${imagesDir}/app-icon.png`
   };
 };

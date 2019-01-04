@@ -5,7 +5,9 @@ module.exports = (endpoint, accountId) => {
     case 'balance':
       return `/balance?account_id=${accountId}`;
     case 'transactions':
-      return `/transactions?account_id=${accountId}&since=${new Date(new Date().setHours(0, 0, 0, 0)).toISOString()}&expand[]=merchant`;
+      return `/transactions?account_id=${accountId}&since=${new Date(
+        new Date().setHours(0, 0, 0, 0)
+      ).toISOString()}&expand[]=merchant`;
     case 'pots':
       return '/pots';
     default:

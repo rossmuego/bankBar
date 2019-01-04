@@ -20,10 +20,10 @@ module.exports = async (store) => {
     form.append('redirect_uri', redirectUri);
     form.append('code', authorizationCode);
 
-    const response = await fetch(
-      'https://api.monzo.com/oauth2/token',
-      { method: 'POST', body: form },
-    );
+    const response = await fetch('https://api.monzo.com/oauth2/token', {
+      method: 'POST',
+      body: form
+    });
     if (errorResponse(response)) {
       throw response;
     }

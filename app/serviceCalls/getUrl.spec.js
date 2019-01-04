@@ -14,7 +14,9 @@ describe('getUrl', () => {
 
     expect(getUrl(account, accountId)).toBe('/accounts?account_type=uk_retail');
     expect(getUrl(balance, accountId)).toBe('/balance?account_id=abc123');
-    expect(getUrl(transactions, accountId)).toBe(`/transactions?account_id=abc123&since=${todayString}&expand[]=merchant`);
+    expect(getUrl(transactions, accountId)).toBe(
+      `/transactions?account_id=abc123&since=${todayString}&expand[]=merchant`
+    );
     expect(getUrl(pots, accountId)).toBe('/pots');
   });
 
@@ -27,4 +29,3 @@ describe('getUrl', () => {
     expect(() => getUrl(undefinedValue, accountId)).toThrow();
   });
 });
-

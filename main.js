@@ -34,8 +34,13 @@ app.on('ready', async () => {
 
     const authMenu = Menu.buildFromTemplate([
       contactMenu,
-      { label: 'Restart', click() { logout(store); } },
-      { label: 'Quit', role: 'quit' },
+      {
+        label: 'Restart',
+        click() {
+          logout(store);
+        }
+      },
+      { label: 'Quit', role: 'quit' }
     ]);
     tray.setContextMenu(authMenu);
 

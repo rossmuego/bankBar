@@ -7,7 +7,7 @@ const getInput = () => { // eslint-disable-line
   if (id && secret) {
     ipcRenderer.send('oAuthInput', {
       clientId: id,
-      clientSecret: secret,
+      clientSecret: secret
     });
   } else {
     alert('Please enter a Client ID and Client Secret'); // eslint-disable-line

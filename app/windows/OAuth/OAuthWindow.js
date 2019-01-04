@@ -8,25 +8,36 @@ module.exports = (store) => {
     width: 380,
     height: 380,
     titleBarStyle: 'hidden',
-    resizable: false,
+    resizable: false
   });
 
   oAuthWindow.loadFile('./app/windows/OAuth/index.html');
 
-  const oAuthMenu = [{
-    label: 'Application',
-    submenu: [
-      { label: 'About Application', selector: 'orderFrontStandardAboutPanel:' },
-      { type: 'separator' },
-      { label: 'Quit', accelerator: 'Command+Q', click() { app.quit(); } },
-    ],
-  },
-  {
-    label: 'Edit',
-    submenu: [
-      { label: 'Paste', accelerator: 'CmdOrCtrl+V', selector: 'paste:' },
-    ],
-  }];
+  const oAuthMenu = [
+    {
+      label: 'Application',
+      submenu: [
+        {
+          label: 'About Application',
+          selector: 'orderFrontStandardAboutPanel:'
+        },
+        { type: 'separator' },
+        {
+          label: 'Quit',
+          accelerator: 'Command+Q',
+          click() {
+            app.quit();
+          }
+        }
+      ]
+    },
+    {
+      label: 'Edit',
+      submenu: [
+        { label: 'Paste', accelerator: 'CmdOrCtrl+V', selector: 'paste:' }
+      ]
+    }
+  ];
 
   Menu.setApplicationMenu(Menu.buildFromTemplate(oAuthMenu));
 

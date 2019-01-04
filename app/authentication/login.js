@@ -15,13 +15,16 @@ const continueLogin = async (store, tray) => {
     await setAccessToken(store);
     const accountId = await get(store, 'account');
 
-    store.set('firstName', accountId.accounts[0].owners[0].preferred_first_name);
+    store.set(
+      'firstName',
+      accountId.accounts[0].owners[0].preferred_first_name
+    );
     store.set('accountId', accountId.accounts[0].id);
     store.set('sortCode', accountId.accounts[0].sort_code);
     store.set('accountNo', accountId.accounts[0].account_number);
 
     const notificationOptions = {
-      name: store.get('firstName'),
+      name: store.get('firstName')
     };
 
     showNotification({ type: 'login', notificationOptions });
@@ -36,10 +39,7 @@ module.exports = (store, tray) => {
   debug('Logging in');
 
   try {
-    if (
-      store.has('clientId') &&
-      store.has('clientSecret')
-    ) {
+    if (store.has('clientId') && store.has('clientSecret')) {
       store.set('redirectUri', 'https://johneas.io/bankbar/auth/');
       getAuthCode(store);
 
@@ -58,4 +58,3 @@ module.exports = (store, tray) => {
     debug('Error: ', err);
   }
 };
-

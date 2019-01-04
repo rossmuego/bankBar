@@ -1,1 +1,1 @@
-module.exports = response => response.status >= 400;
+module.exports = (response) => response.status >= 400;

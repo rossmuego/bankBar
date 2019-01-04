@@ -11,8 +11,8 @@ module.exports = async (store, endpoint) => {
     const accessToken = store.get('accessToken');
     const options = {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
+        Authorization: `Bearer ${accessToken}`
+      }
     };
     const url = getUrl(endpoint, accountId);
     const fullUrl = `https://api.monzo.com${url}`;
