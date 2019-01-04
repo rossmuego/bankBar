@@ -15,8 +15,8 @@ const store = new Store();
 
 app.setAsDefaultProtocolClient('bankbar');
 
-const isSecondInstance = app.makeSingleInstance((commandLine) => { }); // eslint-disable-line
-if (isSecondInstance) {
+const gotSingleInstance = app.requestSingleInstanceLock();
+if (!gotSingleInstance) {
   debug('Quitting second instance');
   app.quit();
 }
