@@ -1,4 +1,4 @@
-const { Notification } = require('electron'); // eslint-disable-line
+const { Notification } = require('electron');
 
 const login = require('./success/login');
 

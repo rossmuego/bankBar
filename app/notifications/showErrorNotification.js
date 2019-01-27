@@ -1,4 +1,4 @@
-const { Notification } = require('electron'); // eslint-disable-line
+const { Notification } = require('electron');
 
 const badRequest = require('./errors/400');
 const notAuthenticated = require('./errors/401');

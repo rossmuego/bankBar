@@ -1,4 +1,4 @@
-const { app } = require('electron'); // eslint-disable-line
+const { app } = require('electron');
 
 module.exports = (store) => {
   store.clear();

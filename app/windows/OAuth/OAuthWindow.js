@@ -1,4 +1,4 @@
-const { BrowserWindow, shell, ipcMain, app, Menu } = require('electron'); // eslint-disable-line
+const { BrowserWindow, shell, ipcMain, app, Menu } = require('electron');
 const debug = require('debug')('OAuth');
 
 module.exports = (store) => {

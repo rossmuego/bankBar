@@ -1,4 +1,4 @@
-const { app } = require('electron'); // eslint-disable-line
+const { app } = require('electron');
 const debug = require('debug')('login');
 const buildApp = require('../buildApp');
 const get = require('../serviceCalls/get');

@@ -1,8 +1,8 @@
-const { ipcRenderer } = require('electron'); // eslint-disable-line
+const { ipcRenderer } = require('electron');
 
 const getInput = () => { // eslint-disable-line
-  const id = document.getElementById('client_id').value; // eslint-disable-line
-  const secret = document.getElementById('client_secret').value; // eslint-disable-line
+  const id = document.getElementById('client_id').value;
+  const secret = document.getElementById('client_secret').value;
 
   if (id && secret) {
     ipcRenderer.send('oAuthInput', {
@@ -10,6 +10,6 @@ const getInput = () => { // eslint-disable-line
       clientSecret: secret
     });
   } else {
-    alert('Please enter a Client ID and Client Secret'); // eslint-disable-line
+    alert('Please enter a Client ID and Client Secret');
   }
 };

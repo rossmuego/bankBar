@@ -1,4 +1,4 @@
-const { shell } = require('electron'); // eslint-disable-line
+const { shell } = require('electron');
 const pkg = require('../../package.json');
 
 module.exports = {

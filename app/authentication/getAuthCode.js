@@ -1,4 +1,4 @@
-const { shell } = require('electron'); // eslint-disable-line
+const { shell } = require('electron');
 const debug = require('debug')('getAuthCode');
 
 module.exports = (store) => {

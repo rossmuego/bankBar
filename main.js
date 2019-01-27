@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const { app, Tray, Menu } = require('electron'); // eslint-disable-line
+const { app, Tray, Menu } = require('electron');
 const Store = require('electron-store');
 const path = require('path');
 const debug = require('debug')('main');

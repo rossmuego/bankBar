@@ -1,4 +1,4 @@
-const { shell } = require('electron'); // eslint-disable-line
+const { shell } = require('electron');
 
 module.exports = {
   label: 'Contact',

@@ -1,4 +1,4 @@
-const { Menu, clipboard, app } = require('electron'); // eslint-disable-line
+const { Menu, clipboard, app } = require('electron');
 const debug = require('debug')('buildApp');
 const aboutMenu = require('../app/menus/about');
 const contactMenu = require('../app/menus/contact');
