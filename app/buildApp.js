@@ -1,4 +1,4 @@
-const { Menu, clipboard, app } = require('electron');
+const { Menu, clipboard, app, dialog } = require('electron');
 const debug = require('debug')('buildApp');
 const aboutMenu = require('../app/menus/about');
 const contactMenu = require('../app/menus/contact');
@@ -8,6 +8,7 @@ const get = require('./serviceCalls/get');
 const optionsMenu = require('../app/menus/options');
 const refreshToken = require('./serviceCalls/POST/refreshToken');
 const showErrorNotification = require('./notifications/showErrorNotification');
+const potTransfer = require('./serviceCalls/PUT/potTransfer');
 
 const buildApp = async (store, tray) => {
   debug('Building App');
@@ -31,12 +32,33 @@ const buildApp = async (store, tray) => {
       .filter((p) => !p.deleted)
       .map((p) => {
         /*
-        electron doesn't support single '&'
-        see https://github.com/electron/electron/issues/9584
-        */
+				electron doesn't support single '&'
+				see https://github.com/electron/electron/issues/9584
+				*/
         const name = p.name.replace('&', '&&');
+        const potTransferOptions = {
+          type: 'question',
+          buttons: ['Cancel', '£50', '£25', '£10', '£5'],
+          cancelId: 0,
+          defaultId: 0,
+          title: 'Transfer to Pot',
+          message: 'How much would you like to transfer?',
+          detail: 'Select an amount to be transferred into the selected pot.'
+        };
+
         return {
-          label: `${name}:  £${formatCurrency(p.balance, p.currency)}`
+          label: `${
+            p.locked === true ? '🔐' : '🔓'
+          } ${name}:  £${formatCurrency(p.balance, p.currency)}`,
+          id: p.id,
+          click(pot) {
+            dialog.showMessageBox(null, potTransferOptions, (valueId) => {
+              if (valueId > 0)
+                potTransfer(store, pot, valueId, balance, () =>
+                  buildApp(store, tray)
+                );
+            });
+          }
         };
       });
 

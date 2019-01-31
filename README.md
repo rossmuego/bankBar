@@ -27,6 +27,7 @@ Dark theme:
 - Shows todays spend & transactions.
 - Shows pot balances.
 - Quick access to bank info (sort code/account number) with ability to quickly copy details.
+- Transfer money into a pot with 2 clicks.
 
 A few features I would like to add:
 - Instant notifications. Currently not possible as the API doesn't support WebSockets.
